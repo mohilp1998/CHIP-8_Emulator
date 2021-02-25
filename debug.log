@@ -1,0 +1,58 @@
+[I] <rom.cpp>::File Size is 78
+[I] <rom.cpp>::ROM Loaded Successfully
+[I] <rom.cpp>::ROM loaded successfully in memory
+[I] <memory.cpp>::Memory initialized with size: 4096 bytes
+[I] [PC: 200]<opcodeHandler.cpp>::Next Instruction is: a050
+[I] <opcodeHandler.cpp>::Register I updated to [50]
+[I] [PC: 202]<opcodeHandler.cpp>::Next Instruction is: 6002
+[I] <opcodeHandler.cpp>::Register [0] updated to val [2].
+[I] [PC: 204]<opcodeHandler.cpp>::Next Instruction is: b20e
+[I] <opcodeHandler.cpp>::PC updated to [210]
+[I] [PC: 210]<opcodeHandler.cpp>::Next Instruction is: c10f
+[I] <opcodeHandler.cpp>::Register [1] updated to [e]
+[I] [PC: 212]<opcodeHandler.cpp>::Next Instruction is: f11e
+[I] <opcodeHandler.cpp>::Register I updated to [5e]
+[I] [PC: 214]<opcodeHandler.cpp>::Next Instruction is: 6000
+[I] <opcodeHandler.cpp>::Register [0] updated to val [0].
+[I] [PC: 216]<opcodeHandler.cpp>::Next Instruction is: b208
+[I] <opcodeHandler.cpp>::PC updated to [208]
+[I] [PC: 208]<opcodeHandler.cpp>::Next Instruction is: f129
+[I] <opcodeHandler.cpp>::Register I updated to [96]
+[I] [PC: 20a]<opcodeHandler.cpp>::Next Instruction is: b200
+[I] <opcodeHandler.cpp>::PC updated to [200]
+[I] [PC: 200]<opcodeHandler.cpp>::Next Instruction is: a050
+[I] <opcodeHandler.cpp>::Register I updated to [50]
+[I] [PC: 202]<opcodeHandler.cpp>::Next Instruction is: 6002
+[I] <opcodeHandler.cpp>::Register [0] updated to val [2].
+[I] [PC: 204]<opcodeHandler.cpp>::Next Instruction is: b20e
+[I] <opcodeHandler.cpp>::PC updated to [210]
+[I] [PC: 210]<opcodeHandler.cpp>::Next Instruction is: c10f
+[I] <opcodeHandler.cpp>::Register [1] updated to [c]
+[I] [PC: 212]<opcodeHandler.cpp>::Next Instruction is: f11e
+[I] <opcodeHandler.cpp>::Register I updated to [5c]
+[I] [PC: 214]<opcodeHandler.cpp>::Next Instruction is: 6000
+[I] <opcodeHandler.cpp>::Register [0] updated to val [0].
+[I] [PC: 216]<opcodeHandler.cpp>::Next Instruction is: b208
+[I] <opcodeHandler.cpp>::PC updated to [208]
+[I] [PC: 208]<opcodeHandler.cpp>::Next Instruction is: f129
+[I] <opcodeHandler.cpp>::Register I updated to [8c]
+[I] [PC: 20a]<opcodeHandler.cpp>::Next Instruction is: b200
+[I] <opcodeHandler.cpp>::PC updated to [200]
+[I] [PC: 200]<opcodeHandler.cpp>::Next Instruction is: a050
+[I] <opcodeHandler.cpp>::Register I updated to [50]
+[I] [PC: 202]<opcodeHandler.cpp>::Next Instruction is: 6002
+[I] <opcodeHandler.cpp>::Register [0] updated to val [2].
+[I] [PC: 204]<opcodeHandler.cpp>::Next Instruction is: b20e
+[I] <opcodeHandler.cpp>::PC updated to [210]
+[I] [PC: 210]<opcodeHandler.cpp>::Next Instruction is: c10f
+[I] <opcodeHandler.cpp>::Register [1] updated to [d]
+[I] [PC: 212]<opcodeHandler.cpp>::Next Instruction is: f11e
+[I] <opcodeHandler.cpp>::Register I updated to [5d]
+[I] [PC: 214]<opcodeHandler.cpp>::Next Instruction is: 6000
+[I] <opcodeHandler.cpp>::Register [0] updated to val [0].
+[I] [PC: 216]<opcodeHandler.cpp>::Next Instruction is: b208
+[I] <opcodeHandler.cpp>::PC updated to [208]
+[I] [PC: 208]<opcodeHandler.cpp>::Next Instruction is: f129
+[I] <opcodeHandler.cpp>::Register I updated to [91]
+[I] [PC: 20a]<opcodeHandler.cpp>::Next Instruction is: b200
+[I] <opcodeHandler.cpp>::PC updated to [200]
