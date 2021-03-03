@@ -9,15 +9,15 @@
 [I] [PC: 204]<opcodeHandler.cpp>::Next Instruction is: b20e
 [I] <opcodeHandler.cpp>::PC updated to [210]
 [I] [PC: 210]<opcodeHandler.cpp>::Next Instruction is: c10f
-[I] <opcodeHandler.cpp>::Register [1] updated to [e]
+[I] <opcodeHandler.cpp>::Register [1] updated to [8]
 [I] [PC: 212]<opcodeHandler.cpp>::Next Instruction is: f11e
-[I] <opcodeHandler.cpp>::Register I updated to [5e]
+[I] <opcodeHandler.cpp>::Register I updated to [58]
 [I] [PC: 214]<opcodeHandler.cpp>::Next Instruction is: 6000
 [I] <opcodeHandler.cpp>::Register [0] updated to val [0].
 [I] [PC: 216]<opcodeHandler.cpp>::Next Instruction is: b208
 [I] <opcodeHandler.cpp>::PC updated to [208]
 [I] [PC: 208]<opcodeHandler.cpp>::Next Instruction is: f129
-[I] <opcodeHandler.cpp>::Register I updated to [96]
+[I] <opcodeHandler.cpp>::Register I updated to [78]
 [I] [PC: 20a]<opcodeHandler.cpp>::Next Instruction is: b200
 [I] <opcodeHandler.cpp>::PC updated to [200]
 [I] [PC: 200]<opcodeHandler.cpp>::Next Instruction is: a050
@@ -27,15 +27,15 @@
 [I] [PC: 204]<opcodeHandler.cpp>::Next Instruction is: b20e
 [I] <opcodeHandler.cpp>::PC updated to [210]
 [I] [PC: 210]<opcodeHandler.cpp>::Next Instruction is: c10f
-[I] <opcodeHandler.cpp>::Register [1] updated to [c]
+[I] <opcodeHandler.cpp>::Register [1] updated to [5]
 [I] [PC: 212]<opcodeHandler.cpp>::Next Instruction is: f11e
-[I] <opcodeHandler.cpp>::Register I updated to [5c]
+[I] <opcodeHandler.cpp>::Register I updated to [55]
 [I] [PC: 214]<opcodeHandler.cpp>::Next Instruction is: 6000
 [I] <opcodeHandler.cpp>::Register [0] updated to val [0].
 [I] [PC: 216]<opcodeHandler.cpp>::Next Instruction is: b208
 [I] <opcodeHandler.cpp>::PC updated to [208]
 [I] [PC: 208]<opcodeHandler.cpp>::Next Instruction is: f129
-[I] <opcodeHandler.cpp>::Register I updated to [8c]
+[I] <opcodeHandler.cpp>::Register I updated to [69]
 [I] [PC: 20a]<opcodeHandler.cpp>::Next Instruction is: b200
 [I] <opcodeHandler.cpp>::PC updated to [200]
 [I] [PC: 200]<opcodeHandler.cpp>::Next Instruction is: a050
@@ -45,14 +45,14 @@
 [I] [PC: 204]<opcodeHandler.cpp>::Next Instruction is: b20e
 [I] <opcodeHandler.cpp>::PC updated to [210]
 [I] [PC: 210]<opcodeHandler.cpp>::Next Instruction is: c10f
-[I] <opcodeHandler.cpp>::Register [1] updated to [d]
+[I] <opcodeHandler.cpp>::Register [1] updated to [5]
 [I] [PC: 212]<opcodeHandler.cpp>::Next Instruction is: f11e
-[I] <opcodeHandler.cpp>::Register I updated to [5d]
+[I] <opcodeHandler.cpp>::Register I updated to [55]
 [I] [PC: 214]<opcodeHandler.cpp>::Next Instruction is: 6000
 [I] <opcodeHandler.cpp>::Register [0] updated to val [0].
 [I] [PC: 216]<opcodeHandler.cpp>::Next Instruction is: b208
 [I] <opcodeHandler.cpp>::PC updated to [208]
 [I] [PC: 208]<opcodeHandler.cpp>::Next Instruction is: f129
-[I] <opcodeHandler.cpp>::Register I updated to [91]
+[I] <opcodeHandler.cpp>::Register I updated to [69]
 [I] [PC: 20a]<opcodeHandler.cpp>::Next Instruction is: b200
 [I] <opcodeHandler.cpp>::PC updated to [200]

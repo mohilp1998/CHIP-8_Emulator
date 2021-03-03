@@ -48,9 +48,6 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
     FX0A    KeyOp
     FX15    Timer
     FX18    Sound
-    FX33    BCD
-    FX55    MEM
-    FX65    MEM
     */
     // Data for instructions
     unsigned char regX = 0x00;
@@ -319,6 +316,36 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
                 IReg);
             break;
 
+        case 0x0033: //BCD(Vx) store at I, I+1, I+2
+            mem->setMemData(reg[regX]/100, IReg);
+            mem->setMemData(((reg[regX] % 100) / 10), IReg+1);
+            mem->setMemData((reg[regX] % 10), IReg+2);
+            std::fprintf(myDebugFile,
+                "[I] <opcodeHandler.cpp>::Updated mem address at location IReg: [%hx] to [%hhx], " 
+                "IReg+1: [%hx] to [%hhx], and IReg+2: [%hx] to [%hhx]\n",
+                IReg, reg[regX]/100, IReg+1, ((reg[regX] % 100) / 10), IReg+2, (reg[regX] % 10));
+            break;
+
+        case 0x0055: //reg_dump(Vx,&I)
+            for (char i = 0; i <= regX; i++)
+            {
+                mem->setMemData(reg[i], IReg+i);
+                std::fprintf(myDebugFile,
+                    "Register [%hhx] with val: [%hhx], stored at memory location: [%hx]\n",
+                    i, reg[i], IReg+i);
+            }
+            break;
+
+        case 0x0065: //reg_load(Vx,&I)
+            for (char i = 0; i <= regX; i++)
+            {
+                reg[i] = mem->getMemData(IReg+i);
+                std::fprintf(myDebugFile,
+                    "Register [%hhx] updated to [%hhx] from memory location [%hx]\n",
+                    i, reg[i], IReg+i);
+            }
+            break;
+
         default:
             std::fprintf(myDebugFile,"[E] <opcodeHandler.cpp>::Unknown Opcode: %hx\n",
             opcode);
@@ -359,6 +386,9 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
     CXNN    Rand
     FX1E    MEM
     FX29    MEM
+    FX33    BCD
+    FX55    MEM
+    FX65    MEM
     */
     return true;
 }
