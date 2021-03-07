@@ -11,10 +11,12 @@ const int SCREEN_HEIGHT = 48 * screenSizeModifier;
 class graphics
 {
 private:
-    /* data */
+    /*File for debugging*/
+    std::FILE *myDebugFile;
+
 public:
-    graphics(/* args */);
+    graphics(std::FILE *debugFile);
     ~graphics();
 };
 
-bool InitSDL(SDL_Window* gWindow, SDL_Renderer* gRenderer);
+bool InitSDL(SDL_Window* gWindow, SDL_Renderer* gRenderer, std::FILE *mydebugFile);

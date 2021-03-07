@@ -2,7 +2,7 @@
 
 Memory::Memory(std::FILE *debugFile)
 {
-    // Constructor
+    // Debugging logs
     myDebugFile = debugFile;
 
     // Loading fonts 0-F sprites at locations 0x0050 to 0x00A0

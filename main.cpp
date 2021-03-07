@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     // Creating SDL variables for graphics
     SDL_Window* gWindow = NULL; // Window for doing rendering
     SDL_Renderer* gRenderer = NULL; // rendering we will using to render
-    if (!InitSDL(gWindow, gRenderer))
+    if (!InitSDL(gWindow, gRenderer, myDebugFile))
     {
         std::fprintf(myDebugFile,"[E] <main.cpp>::Unable to Initialize SDL\n");
         std::exit(1);

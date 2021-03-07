@@ -5,7 +5,9 @@
 
 OpcodeHandler::OpcodeHandler(std::FILE *debugFile)
 {
+    // Debugging logs
     myDebugFile = debugFile;
+    
     // Initializing the PC to position 512, where the instructions start.
     pc = 0x0200;
     // Setting pseudo-random generator seed to current time

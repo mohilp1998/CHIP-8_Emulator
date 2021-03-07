@@ -1,14 +1,16 @@
 #include "include\graphics.h"
 
-graphics::graphics(/* args */)
+graphics::graphics(std::FILE *debugFile)
 {
+    // Debugging logs
+    myDebugFile = debugFile;
 }
 
 graphics::~graphics()
 {
 }
 
-bool InitSDL(SDL_Window* gWindow, SDL_Renderer* gRenderer)
+bool InitSDL(SDL_Window* gWindow, SDL_Renderer* gRenderer, std::FILE *mydebugFile)
 {
     // Necessary step for SDL Dll linking properly
     SDL_SetMainReady();
@@ -16,7 +18,7 @@ bool InitSDL(SDL_Window* gWindow, SDL_Renderer* gRenderer)
     // Initialize SDL with only Video feature
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
-        printf( "Unable to initialize the SDL following error: %s\n", SDL_GetError() );
+        std::fprintf(mydebugFile, "Unable to initialize the SDL following error: %s\n", SDL_GetError() );
         return false;
     }
     
@@ -24,14 +26,14 @@ bool InitSDL(SDL_Window* gWindow, SDL_Renderer* gRenderer)
     gWindow = SDL_CreateWindow( "SDL List of Pixel Working", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     if ( NULL == gWindow )
     {
-        printf( "Failed creating Window: %s\n", SDL_GetError() );
+        std::fprintf(mydebugFile, "Failed creating Window: %s\n", SDL_GetError() );
         return false;
     }
     // Creating renderer
     gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
     if ( NULL == gRenderer )
     {
-        printf( "Unable to renderer: %s\n", SDL_GetError() );
+        std::fprintf(mydebugFile, "Unable to renderer: %s\n", SDL_GetError() );
         return false;
     }
     
