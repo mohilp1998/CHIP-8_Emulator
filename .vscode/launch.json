@@ -5,15 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(Windows) Launch",
+            "name": "cl.exe - Build and debug active file",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "main.exe",
+            "program": "chip8.exe",
+            "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "preLaunchTask": "${defaultBuildTask}",
-            "internalConsoleOptions": "openOnSessionStart",
-            "console": "internalConsole"
+            "environment": [],
+            "console": "externalTerminal",
+            "preLaunchTask": "C/C++: cl.exe build active file"
         }
     ]
 }

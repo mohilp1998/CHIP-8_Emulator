@@ -46,7 +46,7 @@ bool Memory::init(Rom *rom)
         return false;
     }
 
-    std::fprintf(myDebugFile,"[I] <memory.cpp>::Memory initialized with size: %llu bytes\n", mem.size());
+    std::fprintf(myDebugFile,"[I] <memory.cpp>::Memory initialized with size: %zu bytes\n", mem.size());
     return true;
 }
 
