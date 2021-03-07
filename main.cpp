@@ -15,19 +15,20 @@ int main(int argc, char *argv[])
         std::exit(1);
     }
 
-    // Creating SDL variables for graphics
-    SDL_Window* gWindow = NULL; // Window for doing rendering
-    SDL_Renderer* gRenderer = NULL; // rendering we will using to render
-    if (!InitSDL(gWindow, gRenderer, myDebugFile))
-    {
-        std::fprintf(myDebugFile,"[E] <main.cpp>::Unable to Initialize SDL\n");
-        std::exit(1);
-    }
-
     // Initializing the components
     Rom myRom(myDebugFile);
     Memory myMemory(myDebugFile);
     OpcodeHandler myOpcodeHandler(myDebugFile);
+    graphics myGraphics(myDebugFile);
+
+    // Creating SDL variables for graphics
+    SDL_Window* gWindow = NULL; // Window for doing rendering
+    SDL_Renderer* gRenderer = NULL; // rendering we will using to render
+    if (!myGraphics.InitSDL(gWindow, gRenderer))
+    {
+        std::fprintf(myDebugFile,"[E] <main.cpp>::Unable to Initialize SDL\n");
+        std::exit(1);
+    }
 
     // Loading the Pong rom
     if (!myRom.LoadRom("roms/Testing-ROM.ch8"))

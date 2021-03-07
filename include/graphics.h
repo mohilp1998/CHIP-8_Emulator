@@ -17,6 +17,7 @@ private:
 public:
     graphics(std::FILE *debugFile);
     ~graphics();
-};
 
-bool InitSDL(SDL_Window* gWindow, SDL_Renderer* gRenderer, std::FILE *mydebugFile);
+    // Basic SDL initialization, this must happen before keyboard init
+    bool InitSDL(SDL_Window* gWindow, SDL_Renderer* gRenderer);
+};
