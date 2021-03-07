@@ -9,9 +9,14 @@
 				"/Zi",
 				"/EHsc",
 				"/nologo",
+				"/ISDL2\\include",
 				"/Fe:",
 				"chip8.exe",
-				"${workspaceFolder}\\*.cpp"
+				"${workspaceFolder}\\*.cpp",
+				"/link",
+				"/SUBSYSTEM:Console",
+				"SDL2.lib",
+				"SDL2main.lib"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

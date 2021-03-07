@@ -1,0 +1,76 @@
+[I] <rom.cpp>::File Size is 78
+[I] <rom.cpp>::ROM Loaded Successfully
+[I] <rom.cpp>::ROM loaded successfully in memory
+[I] <memory.cpp>::Memory initialized with size: 4096 bytes
+[I] [PC: 200]<opcodeHandler.cpp>::Next Instruction is: 607b
+[I] <opcodeHandler.cpp>::Register [0] updated to val [7b].
+[I] [PC: 202]<opcodeHandler.cpp>::Next Instruction is: a240
+[I] <opcodeHandler.cpp>::Register I updated to [240]
+[I] [PC: 204]<opcodeHandler.cpp>::Next Instruction is: f033
+[I] <opcodeHandler.cpp>::Updated mem address at location IReg: [240] to [1], IReg+1: [241] to [2], and IReg+2: [242] to [3]
+[I] [PC: 206]<opcodeHandler.cpp>::Next Instruction is: 6004
+[I] <opcodeHandler.cpp>::Register [0] updated to val [4].
+[I] [PC: 208]<opcodeHandler.cpp>::Next Instruction is: 6105
+[I] <opcodeHandler.cpp>::Register [1] updated to val [5].
+[I] [PC: 20a]<opcodeHandler.cpp>::Next Instruction is: 6206
+[I] <opcodeHandler.cpp>::Register [2] updated to val [6].
+[I] [PC: 20c]<opcodeHandler.cpp>::Next Instruction is: 6307
+[I] <opcodeHandler.cpp>::Register [3] updated to val [7].
+[I] [PC: 20e]<opcodeHandler.cpp>::Next Instruction is: a243
+[I] <opcodeHandler.cpp>::Register I updated to [243]
+[I] [PC: 210]<opcodeHandler.cpp>::Next Instruction is: f355
+Register [0] with val: [4], stored at memory location: [243]
+Register [1] with val: [5], stored at memory location: [244]
+Register [2] with val: [6], stored at memory location: [245]
+Register [3] with val: [7], stored at memory location: [246]
+[I] [PC: 212]<opcodeHandler.cpp>::Next Instruction is: a240
+[I] <opcodeHandler.cpp>::Register I updated to [240]
+[I] [PC: 214]<opcodeHandler.cpp>::Next Instruction is: f665
+Register [0] updated to [1] from memory location [240]
+Register [1] updated to [2] from memory location [241]
+Register [2] updated to [3] from memory location [242]
+Register [3] updated to [4] from memory location [243]
+Register [4] updated to [5] from memory location [244]
+Register [5] updated to [6] from memory location [245]
+Register [6] updated to [7] from memory location [246]
+[I] [PC: 216]<opcodeHandler.cpp>::Next Instruction is: 1200
+[I] <opcodeHandler.cpp>::PC updated to [200]
+[I] [PC: 200]<opcodeHandler.cpp>::Next Instruction is: 607b
+[I] <opcodeHandler.cpp>::Register [0] updated to val [7b].
+[I] [PC: 202]<opcodeHandler.cpp>::Next Instruction is: a240
+[I] <opcodeHandler.cpp>::Register I updated to [240]
+[I] [PC: 204]<opcodeHandler.cpp>::Next Instruction is: f033
+[I] <opcodeHandler.cpp>::Updated mem address at location IReg: [240] to [1], IReg+1: [241] to [2], and IReg+2: [242] to [3]
+[I] [PC: 206]<opcodeHandler.cpp>::Next Instruction is: 6004
+[I] <opcodeHandler.cpp>::Register [0] updated to val [4].
+[I] [PC: 208]<opcodeHandler.cpp>::Next Instruction is: 6105
+[I] <opcodeHandler.cpp>::Register [1] updated to val [5].
+[I] [PC: 20a]<opcodeHandler.cpp>::Next Instruction is: 6206
+[I] <opcodeHandler.cpp>::Register [2] updated to val [6].
+[I] [PC: 20c]<opcodeHandler.cpp>::Next Instruction is: 6307
+[I] <opcodeHandler.cpp>::Register [3] updated to val [7].
+[I] [PC: 20e]<opcodeHandler.cpp>::Next Instruction is: a243
+[I] <opcodeHandler.cpp>::Register I updated to [243]
+[I] [PC: 210]<opcodeHandler.cpp>::Next Instruction is: f355
+Register [0] with val: [4], stored at memory location: [243]
+Register [1] with val: [5], stored at memory location: [244]
+Register [2] with val: [6], stored at memory location: [245]
+Register [3] with val: [7], stored at memory location: [246]
+[I] [PC: 212]<opcodeHandler.cpp>::Next Instruction is: a240
+[I] <opcodeHandler.cpp>::Register I updated to [240]
+[I] [PC: 214]<opcodeHandler.cpp>::Next Instruction is: f665
+Register [0] updated to [1] from memory location [240]
+Register [1] updated to [2] from memory location [241]
+Register [2] updated to [3] from memory location [242]
+Register [3] updated to [4] from memory location [243]
+Register [4] updated to [5] from memory location [244]
+Register [5] updated to [6] from memory location [245]
+Register [6] updated to [7] from memory location [246]
+[I] [PC: 216]<opcodeHandler.cpp>::Next Instruction is: 1200
+[I] <opcodeHandler.cpp>::PC updated to [200]
+[I] [PC: 200]<opcodeHandler.cpp>::Next Instruction is: 607b
+[I] <opcodeHandler.cpp>::Register [0] updated to val [7b].
+[I] [PC: 202]<opcodeHandler.cpp>::Next Instruction is: a240
+[I] <opcodeHandler.cpp>::Register I updated to [240]
+[I] [PC: 204]<opcodeHandler.cpp>::Next Instruction is: f033
+[I] <opcodeHandler.cpp>::Updated mem address at location IReg: [240] to [1], IReg+1: [241] to [2], and IReg+2: [242] to [3]

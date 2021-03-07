@@ -3,14 +3,24 @@
 #include "include/rom.h"
 #include "include/memory.h"
 #include "include/opcodeHandler.h"
+#include "include/graphics.h"
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {   
     // Creating a debug file which will be sent to everyone for transferring data
     std::FILE *myDebugFile = std::fopen("debug.log","w");
     if (myDebugFile == nullptr)
     {
         std::printf("Error Opening debug file\n");
+        std::exit(1);
+    }
+
+    // Creating SDL variables for graphics
+    SDL_Window* gWindow = NULL; // Window for doing rendering
+    SDL_Renderer* gRenderer = NULL; // rendering we will using to render
+    if (!InitSDL(gWindow, gRenderer))
+    {
+        std::fprintf(myDebugFile,"[E] <main.cpp>::Unable to Initialize SDL\n");
         std::exit(1);
     }
 
