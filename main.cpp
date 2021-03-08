@@ -8,6 +8,8 @@
 #include "include/opcodeHandler.h"
 #include "include/graphics.h"
 
+const long long int CHIP8_PROCESSOR_SPEED_MICROSECONDS = 16666;
+
 int main(int argc, char *argv[])
 {   
     // Creating a debug file which will be sent to everyone for transferring data
@@ -78,14 +80,14 @@ int main(int argc, char *argv[])
         
         // Calculating duration and sleep time
         long long int durationMicros = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
-        durationMicros = 16666 - durationMicros;
+        durationMicros = CHIP8_PROCESSOR_SPEED_MICROSECONDS - durationMicros;
         if (durationMicros > 0)
         {
             std::this_thread::sleep_for(std::chrono::microseconds(durationMicros));
         }
         else
         {
-            std::fprintf(myDebugFile, "[E] <main.cpp>::System slowing done by %lld"
+            std::fprintf(myDebugFile, "[E] <main.cpp>::System slowing done by %lld. "
                 "Allowing system to continue operation\n", durationMicros);
         }
     }
