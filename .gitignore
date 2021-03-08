@@ -1,0 +1,9 @@
+debug.log
+chip8.ilk
+chip8.pdb
+vc140.pdb
+memory.obj
+opcodeHandler.obj
+rom.obj
+graphics.obj
+keyboard.obj

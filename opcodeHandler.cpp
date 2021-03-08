@@ -47,7 +47,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
     EX9E    KeyOp
     EXA1    KeyOp
     FX07    Timer
-    FX0A    KeyOp
+    FX0A    KeyOp - Here do not block in emulateInstr rather update to PC = PC-2 and poll
     FX15    Timer
     FX18    Sound
     */

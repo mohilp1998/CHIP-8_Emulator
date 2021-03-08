@@ -4,7 +4,7 @@
 #include <thread>
 #include "memory.h"
 
-const long long int EMULATION_SPEED_MICROS = 500;
+const long long int EMULATION_SPEED_MICROS = 100;
 
 class OpcodeHandler
 {
