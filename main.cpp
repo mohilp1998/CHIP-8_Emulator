@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
         }
 
         // Emulating Instruction
-        if (!myOpcodeHandler.emulateInstr(&myMemory))
+        if (!myOpcodeHandler.emulateInstr(&myMemory, &myGraphics, &myKeyboard))
         {
             std::fprintf(myDebugFile,"[E] <main.cpp>::Error emulating instruction\n");
             std::fprintf(stderr, "ERROR stopping code execution\n");
@@ -94,6 +94,10 @@ int main(int argc, char *argv[])
                 std::fprintf(myDebugFile,"[E] <main.cpp>::Error Drawing Graphics\n");
                 std::fprintf(stderr, "ERROR stopping code execution\n");
                 std::exit(1);
+            }
+            else
+            {
+                std::fprintf(myDebugFile,"[I] <main.cpp>::Updated Screen with new Graphics\n");
             }
         }
 

@@ -70,7 +70,7 @@ bool graphics::draw()
     {
         for (size_t x = 0; x < (SCREEN_WIDTH / screenSizeModifier); x++)
         {
-            SDL_SetRenderDrawColor(gRenderer, pixels[y][x], pixels[y][x], pixels[y][x], 0xFF);
+            SDL_SetRenderDrawColor(gRenderer, (pixels[y][x] * 0xFF), (pixels[y][x] * 0xFF), (pixels[y][x] * 0xFF), 0xFF);
             rectangle.x = x * screenSizeModifier;
             rectangle.y = y * screenSizeModifier;
             rectangle.w = screenSizeModifier;

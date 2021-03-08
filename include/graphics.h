@@ -15,14 +15,14 @@ private:
     /*File for debugging*/
     std::FILE *myDebugFile;
 
-    // List of pixels which will be used for drawing
-    std::vector<std::vector<unsigned char>> pixels;
-
     // SDL Variables
     SDL_Window* gWindow = NULL; // Window for doing rendering
     SDL_Renderer* gRenderer = NULL; // rendering we will using to render
 
 public:
+    // List of pixels which will be used for drawing
+    std::vector<std::vector<unsigned char>> pixels;
+    
     graphics(std::FILE *debugFile);
     ~graphics();
 

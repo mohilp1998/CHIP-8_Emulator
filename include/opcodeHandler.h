@@ -3,6 +3,8 @@
 #include <chrono>
 #include <thread>
 #include "memory.h"
+#include "graphics.h"
+#include "keyboard.h"
 
 const long long int EMULATION_SPEED_MICROS = 100;
 
@@ -41,7 +43,7 @@ public:
     ~OpcodeHandler();
 
     bool readNxtInstr(Memory *mem);
-    bool emulateInstr(Memory *mem); // \todo add graphicsHandler, Timer and Inputs
+    bool emulateInstr(Memory *mem, graphics *myGraphics, keyboard *myKeyboard); // \todo add graphicsHandler, Timer and Inputs
     // \todo in graphicsHandler, Timer and Inputs add flags for next iteration update logic.
     // \todo emulateInstr will update those flags only.
 };

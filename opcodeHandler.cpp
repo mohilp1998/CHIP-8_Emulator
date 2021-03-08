@@ -38,11 +38,10 @@ bool OpcodeHandler::readNxtInstr(Memory *mem)
     return true;
 }
 
-bool OpcodeHandler::emulateInstr(Memory *mem)
+bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *myKeyboard)
 {
     /* \todo List of instructions left to complete
-    0NNN    Call
-    00E0    Display
+    0NNN    Call - Not necessarily needed
     DXYN    Disp
     EX9E    KeyOp
     EXA1    KeyOp
@@ -59,16 +58,34 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
     unsigned char regY = 0x00;
     unsigned char NNData = 0x00; //Stored 0xDDNN Last to hex data if needed
     unsigned short addr = 0x0000; //Used for storing memory address
+
+    // Variables for 0xDXYN: Draw Sprite Instruction
+    unsigned short xPos;
+    unsigned short yPos;
+    unsigned short height;
+    unsigned char rowPixel;
     switch (opcode & 0xF000)
     {
     case 0x0000 : // 3 Instructions: 0xNNN; 0x0E0 and 0x00EE
         switch (opcode)
         {
+        case 0x00E0 : // 0x00E0 Clear Screen
+            updateGraphics = true;
+            for (int i = 0; i < (SCREEN_HEIGHT / screenSizeModifier); i++)
+            {
+                for (int j = 0; j < (SCREEN_WIDTH / screenSizeModifier); j++)
+                {
+                   myGraphics->pixels[i][j] = 0x00;
+                }
+            }
+            std::fprintf(myDebugFile, "[I] <opcodeHandler.cpp>::Cleared the Screen\n");
+            break;
+
         case 0x00EE : // 0x00EE Return from subroutine
             sptr = (sptr - 1) % 16;
             pc = stack[sptr];
             std::fprintf(myDebugFile,
-            "[I] [PC: %hx]<opcodeHandler.cpp>::Return from subroutine. PC updated to [%hx] &"
+            "[I] <opcodeHandler.cpp>::Return from subroutine. PC updated to [%hx] &"
             " stack pointer updated to [%d]\n",
                 pc,
                 pc, sptr);  
@@ -303,6 +320,41 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
                 regX, reg[regX]);
         break;
 
+    case 0xD000: //0xDXYN: Draw sprite at location Vx, Vy till height N and set VF if collison
+        updateGraphics = true;
+
+        regX = ((opcode & 0x0F00) >> 8);
+        regY = ((opcode & 0x00F0) >> 4);
+        xPos = reg[regX] % (SCREEN_WIDTH / screenSizeModifier);
+        yPos = reg[regY] % (SCREEN_HEIGHT / screenSizeModifier);
+        height = (opcode & 0x000F);
+        rowPixel = 0x00;
+
+        reg[0x0F] = 0;
+        for (int i = 0; i < (height); i++)
+        {
+            rowPixel = mem->getMemData(IReg + i);
+            for (int j = 0; j < 8; j++)
+            {
+                if ( (rowPixel & (0x80 >> j)) != 0)
+                {
+                    unsigned short x = (xPos + j) % (SCREEN_WIDTH / screenSizeModifier);
+                    unsigned short y = (yPos + i) % (SCREEN_HEIGHT / screenSizeModifier);
+                    if (myGraphics->pixels[y][x] == 1)
+                    {
+                        reg[0x0F] = 1;
+                    }
+                    myGraphics->pixels[y][x] = (myGraphics->pixels[y][x] + 1) % 2;
+                }
+            }
+            
+        }
+        std::fprintf(myDebugFile,
+            "[I] <opcodeHandler.cpp>::Drawn Sprite at Pos:(%hd, %hd) and height:%hd. "
+            "Also update reg[16] to %hhx\n",
+            xPos, yPos, height, reg[0x0F]);
+        break;
+
     case 0xF000: // Multiple set of instructions of type 0xFXDD
         regX = ((opcode & 0x0F00) >> 8);
         switch (opcode & 0x00FF)
@@ -396,6 +448,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
     FX33    BCD
     FX55    MEM
     FX65    MEM
+    00E0    Display
     */
     return true;
 }
