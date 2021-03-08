@@ -333,7 +333,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
             {
                 mem->setMemData(reg[i], IReg+i);
                 std::fprintf(myDebugFile,
-                    "Register [%hhx] with val: [%hhx], stored at memory location: [%hx]\n",
+                    "[I] <opcodeHandler.cpp>::Register [%hhx] with val: [%hhx], stored at memory location: [%hx]\n",
                     i, reg[i], IReg+i);
             }
             break;
@@ -343,7 +343,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
             {
                 reg[i] = mem->getMemData(IReg+i);
                 std::fprintf(myDebugFile,
-                    "Register [%hhx] updated to [%hhx] from memory location [%hx]\n",
+                    "[I] <opcodeHandler.cpp>::Register [%hhx] updated to [%hhx] from memory location [%hx]\n",
                     i, reg[i], IReg+i);
             }
             break;

@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <thread>
+
 #include "include/rom.h"
 #include "include/memory.h"
 #include "include/opcodeHandler.h"
@@ -22,11 +25,10 @@ int main(int argc, char *argv[])
     graphics myGraphics(myDebugFile);
 
     // Creating SDL variables for graphics
-    SDL_Window* gWindow = NULL; // Window for doing rendering
-    SDL_Renderer* gRenderer = NULL; // rendering we will using to render
-    if (!myGraphics.InitSDL(gWindow, gRenderer))
+    if (!myGraphics.InitSDL())
     {
         std::fprintf(myDebugFile,"[E] <main.cpp>::Unable to Initialize SDL\n");
+        std::fprintf(stderr, "ERROR stopping code execution\n");
         std::exit(1);
     }
 
@@ -49,6 +51,9 @@ int main(int argc, char *argv[])
     // Reading instructions using opcode handlers
     for (size_t i = 0; i < 27; i++)
     {
+        // Time Start
+        std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
         if (!myOpcodeHandler.readNxtInstr(&myMemory))
         {
             std::fprintf(myDebugFile,"[E] <main.cpp>::Error reading nxt instruction\n");
@@ -61,12 +66,29 @@ int main(int argc, char *argv[])
             std::fprintf(stderr, "ERROR stopping code execution\n");
             std::exit(1);
         }
-    }
+        if(!myGraphics.draw())
+        {
+            std::fprintf(myDebugFile,"[E] <main.cpp>::Error Drawing Graphics\n");
+            std::fprintf(stderr, "ERROR stopping code execution\n");
+            std::exit(1);
+        }
 
-    // for (size_t i = 0x50; i < 0x50+80; ++i)
-    // {
-    //     std::printf("Instruction at position %llu: %hhx\n", i, myMemory.getMemData(i));
-    // }
+        // End Time
+        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        
+        // Calculating duration and sleep time
+        long long int durationMicros = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
+        durationMicros = 16666 - durationMicros;
+        if (durationMicros > 0)
+        {
+            std::this_thread::sleep_for(std::chrono::microseconds(durationMicros));
+        }
+        else
+        {
+            std::fprintf(myDebugFile, "[E] <main.cpp>::System slowing done by %lld"
+                "Allowing system to continue operation\n", durationMicros);
+        }
+    }
 
     std::fclose(myDebugFile);
     std::fprintf(stdout, "Code execution complete\n");
