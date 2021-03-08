@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
     std::FILE *myDebugFile = std::fopen("debug.log","w");
     if (myDebugFile == nullptr)
     {
-        std::printf("Error Opening debug file\n");
+        std::printf("[E] <main.cpp>::Error Opening debug file\n");
+        std::printf("ERROR stopping code execution\n");
         std::exit(1);
     }
 
