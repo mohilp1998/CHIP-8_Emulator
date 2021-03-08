@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include "memory.h"
+
+const long long int EMULATION_SPEED_MICROS = 500;
 
 class OpcodeHandler
 {
@@ -29,6 +33,10 @@ private:
     // sprite addresses
     std::vector<unsigned short> spriteAddr {std::vector<unsigned short> (16, 0x0000)};
 public:
+    // Graphics Update Flag - Public as accessed outside
+    bool updateGraphics {false};
+
+    // Functions
     OpcodeHandler(std::FILE *debugFile);
     ~OpcodeHandler();
 

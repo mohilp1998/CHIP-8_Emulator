@@ -34,7 +34,6 @@
 [I] <opcodeHandler.cpp>::Register [4] updated to [5] from memory location [244]
 [I] <opcodeHandler.cpp>::Register [5] updated to [6] from memory location [245]
 [I] <opcodeHandler.cpp>::Register [6] updated to [7] from memory location [246]
-[E] <main.cpp>::System slowing done by -8356. Allowing system to continue operation
 [I] [PC: 216]<opcodeHandler.cpp>::Next Instruction is: 1200
 [I] <opcodeHandler.cpp>::PC updated to [200]
 [I] [PC: 200]<opcodeHandler.cpp>::Next Instruction is: 607b
@@ -45,7 +44,6 @@
 [I] <opcodeHandler.cpp>::Updated mem address at location IReg: [240] to [1], IReg+1: [241] to [2], and IReg+2: [242] to [3]
 [I] [PC: 206]<opcodeHandler.cpp>::Next Instruction is: 6004
 [I] <opcodeHandler.cpp>::Register [0] updated to val [4].
-[E] <main.cpp>::System slowing done by -5361. Allowing system to continue operation
 [I] [PC: 208]<opcodeHandler.cpp>::Next Instruction is: 6105
 [I] <opcodeHandler.cpp>::Register [1] updated to val [5].
 [I] [PC: 20a]<opcodeHandler.cpp>::Next Instruction is: 6206
@@ -75,6 +73,5 @@
 [I] <opcodeHandler.cpp>::Register [0] updated to val [7b].
 [I] [PC: 202]<opcodeHandler.cpp>::Next Instruction is: a240
 [I] <opcodeHandler.cpp>::Register I updated to [240]
-[E] <main.cpp>::System slowing done by -9916. Allowing system to continue operation
 [I] [PC: 204]<opcodeHandler.cpp>::Next Instruction is: f033
 [I] <opcodeHandler.cpp>::Updated mem address at location IReg: [240] to [1], IReg+1: [241] to [2], and IReg+2: [242] to [3]

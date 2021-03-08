@@ -51,6 +51,9 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
     FX15    Timer
     FX18    Sound
     */
+    // Setting Graphics flag to false
+    updateGraphics = false;
+
     // Data for instructions
     unsigned char regX = 0x00;
     unsigned char regY = 0x00;
@@ -67,8 +70,8 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
             std::fprintf(myDebugFile,
             "[I] [PC: %hx]<opcodeHandler.cpp>::Return from subroutine. PC updated to [%hx] &"
             " stack pointer updated to [%d]\n",
-             pc,
-             pc, sptr);  
+                pc,
+                pc, sptr);  
             break;
 
         default:
@@ -95,9 +98,9 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
         std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Call subroutine. PC updated to [%hx] &"
             " stack pointer updated to [%d]\n",
-             pc, sptr);
+                pc, sptr);
         break;
-    
+
     case 0x3000 : // 0x3XNN: if(Vx == NN) skip next instruction
         regX = ((opcode & 0x0F00) >> 8);
         NNData = (opcode & 0x00FF);
@@ -107,14 +110,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
             std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], NN Val: [%hhx]\n",
-             pc, regX, reg[regX], NNData);
+                pc, regX, reg[regX], NNData);
         }
         else
         {
             std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Not Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], NN Val: [%hhx]\n",
-             pc, regX ,reg[regX], NNData);
+                pc, regX ,reg[regX], NNData);
         }
         break;
 
@@ -127,14 +130,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
             std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], NN Val: [%hhx]\n",
-             pc, regX, reg[regX], NNData);
+                pc, regX, reg[regX], NNData);
         }
         else
         {
             std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Not Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], NN Val: [%hhx]\n",
-             pc, regX, reg[regX], NNData);
+                pc, regX, reg[regX], NNData);
         }
         break;
 
@@ -147,14 +150,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
             std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], regY Val: [%hhx]\n",
-             pc, regX, reg[regX], reg[regY]);
+                pc, regX, reg[regX], reg[regY]);
         }
         else
         {
             std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Not Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], regY Val: [%hhx]\n",
-             pc, regX ,reg[regX], reg[regY]);
+                pc, regX ,reg[regX], reg[regY]);
         }
         break;
 
@@ -267,14 +270,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
             std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], regY Val: [%hhx]\n",
-             pc, regX, reg[regX], reg[regY]);
+                pc, regX, reg[regX], reg[regY]);
         }
         else
         {
             std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Not Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], regY Val: [%hhx]\n",
-             pc, regX, reg[regX], reg[regY]);
+                pc, regX, reg[regX], reg[regY]);
         }
         break;
 
@@ -282,14 +285,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
         IReg = (opcode & 0x0FFF);
         std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Register I updated to [%hx]\n",
-             IReg);
+                IReg);
         break;
 
     case 0xB000 : // 0xBNNN: PC=V[0]+NNN
         pc = reg[0x00] + (opcode & 0x0FFF);
         std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::PC updated to [%hx]\n",
-             pc);
+                pc);
         break;
 
     case 0xC000: //0xCXNN: Vx = rand()&NN
@@ -297,7 +300,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
         reg[regX] = rand() & (opcode & 0x00FF);
         std::fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Register [%hhx] updated to [%hhx]\n",
-             regX, reg[regX]);
+                regX, reg[regX]);
         break;
 
     case 0xF000: // Multiple set of instructions of type 0xFXDD
@@ -363,6 +366,8 @@ bool OpcodeHandler::emulateInstr(Memory *mem)
         break;
     }
 
+    // Sleeping for sometime to handle the system speed
+    std::this_thread::sleep_for(std::chrono::microseconds(EMULATION_SPEED_MICROS));
 
     /* Completed List:
     8XY0    Assign

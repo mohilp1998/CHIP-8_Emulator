@@ -8,7 +8,7 @@
 #include "include/opcodeHandler.h"
 #include "include/graphics.h"
 
-const long long int CHIP8_PROCESSOR_SPEED_MICROSECONDS = 16666;
+const long long int CHIP8_TIMER_SPEED_MICROSECONDS = 16600;
 
 int main(int argc, char *argv[])
 {   
@@ -50,45 +50,55 @@ int main(int argc, char *argv[])
         std::exit(1);
     }
 
+    // Setting for proper timing
+    std::chrono::steady_clock::time_point beginTime = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point endTime = std::chrono::steady_clock::now();
+    long long int durationMicros = -1; // Initially negative as we want the code to calculate time
     // Reading instructions using opcode handlers
     for (size_t i = 0; i < 27; i++)
     {
-        // Time Start
-        std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+        // Start Time
+        if (durationMicros < 0)
+        {
+            beginTime = std::chrono::steady_clock::now();
+        }
 
+        // Reading Instructions
         if (!myOpcodeHandler.readNxtInstr(&myMemory))
         {
             std::fprintf(myDebugFile,"[E] <main.cpp>::Error reading nxt instruction\n");
             std::fprintf(stderr, "ERROR stopping code execution\n");
             std::exit(1);
         }
+
+        // Emulating Instruction
         if (!myOpcodeHandler.emulateInstr(&myMemory))
         {
             std::fprintf(myDebugFile,"[E] <main.cpp>::Error emulating instruction\n");
             std::fprintf(stderr, "ERROR stopping code execution\n");
             std::exit(1);
         }
-        if(!myGraphics.draw())
+
+        // Drawing the figure
+        if(myOpcodeHandler.updateGraphics)
         {
-            std::fprintf(myDebugFile,"[E] <main.cpp>::Error Drawing Graphics\n");
-            std::fprintf(stderr, "ERROR stopping code execution\n");
-            std::exit(1);
+            if(!myGraphics.draw())
+            {
+                std::fprintf(myDebugFile,"[E] <main.cpp>::Error Drawing Graphics\n");
+                std::fprintf(stderr, "ERROR stopping code execution\n");
+                std::exit(1);
+            }
         }
 
         // End Time
-        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        endTime = std::chrono::steady_clock::now();
         
-        // Calculating duration and sleep time
-        long long int durationMicros = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
-        durationMicros = CHIP8_PROCESSOR_SPEED_MICROSECONDS - durationMicros;
-        if (durationMicros > 0)
+        // Calculating DurationMicros
+        durationMicros = CHIP8_TIMER_SPEED_MICROSECONDS - 
+            ( std::chrono::duration_cast<std::chrono::microseconds>(endTime - beginTime).count() );
+        if (durationMicros < 0)
         {
-            std::this_thread::sleep_for(std::chrono::microseconds(durationMicros));
-        }
-        else
-        {
-            std::fprintf(myDebugFile, "[E] <main.cpp>::System slowing done by %lld. "
-                "Allowing system to continue operation\n", durationMicros);
+            //\todo Update Time values here
         }
     }
 
