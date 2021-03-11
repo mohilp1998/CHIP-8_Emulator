@@ -36,7 +36,7 @@ private:
     std::vector<unsigned short> spriteAddr {std::vector<unsigned short> (16, 0x0000)};
 public:
     // Graphics Update Flag - Public as accessed outside
-    bool updateGraphics {false};
+    bool m_updateGraphics {false};
 
     // Functions
     OpcodeHandler(std::FILE *debugFile);

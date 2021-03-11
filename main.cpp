@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
         }
 
         // Drawing the figure only if update Graphics is set
-        if(myOpcodeHandler.updateGraphics)
+        if(myOpcodeHandler.m_updateGraphics)
         {
             if(!myGraphics.draw())
             {

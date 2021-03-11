@@ -42,22 +42,19 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
 {
     /* \todo List of instructions left to complete
     0NNN    Call - Not necessarily needed
-    DXYN    Disp
-    EX9E    KeyOp
-    EXA1    KeyOp
     FX07    Timer
-    FX0A    KeyOp - Here do not block in emulateInstr rather update to PC = PC-2 and poll
     FX15    Timer
     FX18    Sound
     */
     // Setting Graphics flag to false
-    updateGraphics = false;
+    m_updateGraphics = false;
 
     // Data for instructions
-    unsigned char regX = 0x00;
-    unsigned char regY = 0x00;
-    unsigned char NNData = 0x00; //Stored 0xDDNN Last to hex data if needed
-    unsigned short addr = 0x0000; //Used for storing memory address
+    unsigned char regX;
+    unsigned char regY;
+    unsigned char NNData; //Stored 0xDDNN Last to hex data if needed
+    unsigned short addr; //Used for storing memory address
+    bool keyPress; //Used by 0xFX0A wait for a key press
 
     // Variables for 0xDXYN: Draw Sprite Instruction
     unsigned short xPos;
@@ -70,7 +67,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         switch (opcode)
         {
         case 0x00E0 : // 0x00E0 Clear Screen
-            updateGraphics = true;
+            m_updateGraphics = true;
             for (int i = 0; i < (SCREEN_HEIGHT / screenSizeModifier); i++)
             {
                 for (int j = 0; j < (SCREEN_WIDTH / screenSizeModifier); j++)
@@ -321,7 +318,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         break;
 
     case 0xD000: //0xDXYN: Draw sprite at location Vx, Vy till height N and set VF if collison
-        updateGraphics = true;
+        m_updateGraphics = true;
 
         regX = ((opcode & 0x0F00) >> 8);
         regY = ((opcode & 0x00F0) >> 4);
@@ -355,10 +352,65 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             xPos, yPos, height, reg[0x0F]);
         break;
 
+    case 0xE000: // Keyboard Skip Instructions
+        regX = ((opcode & 0x0F00) >> 8);
+        switch (opcode & 0x00FF)
+        {
+        case 0x009E: // if(key() == Vx) skip nxt Instruction
+            if (myKeyboard->keyState[reg[regX]] == 1)
+            {
+                pc = pc + 2;
+            }
+            std::fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::" 
+            "PC updated to %hx, key in reg[%hhx] is %hhx\n",
+            pc, regX, reg[regX]);
+            break;
+
+        case 0x00A1: // if(key() != Vx) skip nxt Instruction
+            if (myKeyboard->keyState[reg[regX]] == 0)
+            {
+                pc = pc + 2;
+            }
+            std::fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::" 
+            "PC updated to %hx, key in reg[%hhx] is %hhx\n",
+            pc, regX, reg[regX]);
+            break;
+
+        default:
+            std::fprintf(myDebugFile,"[E] <opcodeHandler.cpp>::Unknown Opcode: %hx\n",
+            opcode);
+            return false;
+            break;
+        }
+    break;
+
     case 0xF000: // Multiple set of instructions of type 0xFXDD
         regX = ((opcode & 0x0F00) >> 8);
         switch (opcode & 0x00FF)
         {
+        case 0x000A: // Wait till a single press and store it in Vx
+            keyPress = false;
+            for (char i = 0; i < 0x0F; i++)
+            {
+                if (myKeyboard->keyState[i] == 1)
+                {
+                    keyPress = true;
+                    reg[regX] = i;
+                    std::fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::Key %hhx pressed,"
+                    " moving to next Instruction\n",
+                    i);
+                    break;
+                }
+            }
+            
+            if(!keyPress)
+            {
+                std::fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::No key pressed, "
+                "staying at the same instruction\n");
+                pc = pc - 2;
+            }
+            break;
+
         case 0x001E: // I += Vx
             IReg += reg[regX];
             std::fprintf(myDebugFile,
@@ -448,7 +500,11 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
     FX33    BCD
     FX55    MEM
     FX65    MEM
-    00E0    Display
+    00E0    Disp
+    DXYN    Disp
+    EX9E    KeyOp
+    EXA1    KeyOp
+    FX0A    KeyOp
     */
     return true;
 }
