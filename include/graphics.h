@@ -7,7 +7,7 @@
 
 const int screenSizeModifier = 10;
 const int SCREEN_WIDTH = 64 * screenSizeModifier;
-const int SCREEN_HEIGHT = 48 * screenSizeModifier;
+const int SCREEN_HEIGHT = 32 * screenSizeModifier;
 
 class graphics
 {

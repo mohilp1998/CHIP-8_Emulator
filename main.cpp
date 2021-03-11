@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     timer myTimer(myDebugFile);
 
     // Loading the Pong rom
-    if (!myRom.LoadRom("roms/Pong.ch8"))
+    if (!myRom.LoadRom("example_code/chip8-roms-master/games/Space Invaders [David Winter].ch8"))
     {
         fprintf(myDebugFile,"[E] <main.cpp>::Error Loading Rom\n");
         fprintf(stderr, "ERROR stopping code execution\n");
