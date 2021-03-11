@@ -44,14 +44,11 @@ bool OpcodeHandler::readNxtInstr(Memory *mem)
     return true;
 }
 
-bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *myKeyboard)
+bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *myKeyboard,
+     timer *myTimer)
 {
-    /* \todo List of instructions left to complete
-    0NNN    Call - Not necessarily needed
-    FX07    Timer
-    FX15    Timer
-    FX18    Sound
-    */
+    // 0NNN: This instruction is not implemented.
+
     // Setting Graphics flag to false
     m_updateGraphics = false;
 
@@ -394,6 +391,12 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         regX = ((opcode & 0x0F00) >> 8);
         switch (opcode & 0x00FF)
         {
+        case 0x0007: // 0xFX07: Vx = timer val
+            reg[regX] = myTimer->getDelayTimer();
+            fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::Register[%hhx] updated to %hhx\n",
+                regX, reg[regX]);
+            break;
+    
         case 0x000A: // Wait till a single press and store it in Vx
             keyPress = false;
             for (char i = 0; i < 0x10; i++)
@@ -415,6 +418,18 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
                 "staying at the same instruction\n");
                 pc = pc - 2;
             }
+            break;
+
+        case 0x0015: // 0xFX15: Set delay timer to Vx
+            myTimer->setDelayTimer(reg[regX]);
+            fprintf(myDebugFile, "[I] <opcodeHandler.cpp>::Delay Timer set to %hhx\n",
+                myTimer->getDelayTimer());
+            break;
+
+        case 0x0018: // 0xFX18: Set sound timer to Vx
+            myTimer->setSoundTimer(reg[regX]);
+            fprintf(myDebugFile, "[I] <opcodeHandler.cpp>::Sound Timer set to %hhx\n",
+                reg[regX]);
             break;
 
         case 0x001E: // I += Vx
@@ -479,39 +494,6 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
     // Sleeping for sometime to handle the system speed
     std::this_thread::sleep_for(std::chrono::microseconds(EMULATION_SPEED_MICROS));
 
-    /* Completed List:
-    8XY0    Assign
-    8XY1    BitOp
-    8XY2    BitOp
-    8XY3    BitOp
-    8XY4    Math
-    8XY5    Math
-    8XY6    BitOp
-    8XY7    Math
-    8XYE    BitOp
-    6XNN    Const
-    7XNN    Const
-    1NNN    Flow
-    2NNN    Flow
-    00EE    Flow
-    3XNN    Cond
-    4XNN    Cond
-    5XY0    Cond
-    9XY0    Cond
-    ANNN    MEM
-    BNNN    Flow
-    CXNN    Rand
-    FX1E    MEM
-    FX29    MEM
-    FX33    BCD
-    FX55    MEM
-    FX65    MEM
-    00E0    Disp
-    DXYN    Disp
-    EX9E    KeyOp
-    EXA1    KeyOp
-    FX0A    KeyOp
-    */
     return true;
 }
 
@@ -519,3 +501,40 @@ bool OpcodeHandler::getGraphicsFlag()
 {
     return m_updateGraphics;
 }
+
+/* Completed List:
+8XY0    Assign
+8XY1    BitOp
+8XY2    BitOp
+8XY3    BitOp
+8XY4    Math
+8XY5    Math
+8XY6    BitOp
+8XY7    Math
+8XYE    BitOp
+6XNN    Const
+7XNN    Const
+1NNN    Flow
+2NNN    Flow
+00EE    Flow
+3XNN    Cond
+4XNN    Cond
+5XY0    Cond
+9XY0    Cond
+ANNN    MEM
+BNNN    Flow
+CXNN    Rand
+FX1E    MEM
+FX29    MEM
+FX33    BCD
+FX55    MEM
+FX65    MEM
+00E0    Disp
+DXYN    Disp
+EX9E    KeyOp
+EXA1    KeyOp
+FX0A    KeyOp
+FX07    Timer
+FX15    Timer
+FX18    Sound
+*/

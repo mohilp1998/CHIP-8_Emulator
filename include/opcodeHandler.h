@@ -5,8 +5,9 @@
 #include "memory.h"
 #include "graphics.h"
 #include "keyboard.h"
+#include "timer.h"
 
-const long long int EMULATION_SPEED_MICROS = 100;
+const long long int EMULATION_SPEED_MICROS = 500;
 
 class OpcodeHandler
 {
@@ -44,7 +45,7 @@ public:
     ~OpcodeHandler();
 
     bool readNxtInstr(Memory *mem);
-    bool emulateInstr(Memory *mem, graphics *myGraphics, keyboard *myKeyboard); // \todo add graphicsHandler, Timer and Inputs
-    
+    bool emulateInstr(Memory *mem, graphics *myGraphics, keyboard *myKeyboard,
+         timer *myTimer);
     bool getGraphicsFlag();
 };

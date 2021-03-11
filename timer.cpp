@@ -44,12 +44,12 @@ bool timer::updateTimer()
     {
         // \todo add logic to do real BEEPS.
         soundTimer--;
-        if (soundTimer % 2)
+        if ((soundTimer % 10) == 0)
         {
             printf("BEEP!\n");
         }
     }
-    std::fprintf(myDebugFile,"Updated Timers - Delay Timer:%hhx & Sound Timer:%hhx\n",
+    std::fprintf(myDebugFile,"[I] <timer.cpp>::Updated Timers - Delay Timer:%hhx & Sound Timer:%hhx\n",
         delayTimer, soundTimer);
     
     return true;

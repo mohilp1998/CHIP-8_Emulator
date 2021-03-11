@@ -8,6 +8,7 @@
 #include "include/opcodeHandler.h"
 #include "include/graphics.h"
 #include "include/keyboard.h"
+#include "include/timer.h"
 
 // Method for disabling DEBUGGING FILE TO FILE Basis
 // #define DISABLE_DEBUG_LOGS
@@ -15,7 +16,7 @@
     #define fprintf(myDebugFile, fmt, ...) (0)
 #endif
 
-const long long int CHIP8_TIMER_SPEED_MICROSECONDS = 15000;
+const long long int CHIP8_TIMER_SPEED_MICROSECONDS = 16000;
 
 int main(int argc, char *argv[])
 {   
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
     OpcodeHandler myOpcodeHandler(myDebugFile);
     graphics myGraphics(myDebugFile);
     keyboard myKeyboard(myDebugFile);
+    timer myTimer(myDebugFile);
 
     // Loading the Pong rom
     if (!myRom.LoadRom("roms/Testing-ROM.ch8"))
@@ -85,7 +87,7 @@ int main(int argc, char *argv[])
         }
 
         // Emulating Instruction
-        if (!myOpcodeHandler.emulateInstr(&myMemory, &myGraphics, &myKeyboard))
+        if (!myOpcodeHandler.emulateInstr(&myMemory, &myGraphics, &myKeyboard, &myTimer))
         {
             fprintf(myDebugFile,"[E] <main.cpp>::Error emulating instruction\n");
             fprintf(stderr, "ERROR stopping code execution\n");
@@ -121,10 +123,10 @@ int main(int argc, char *argv[])
         // Calculating DurationMicros
         durationMicros = CHIP8_TIMER_SPEED_MICROSECONDS - 
             ( std::chrono::duration_cast<std::chrono::microseconds>(endTime - beginTime).count() );
-        // std::printf("Duration %lld\n", durationMicros);
+        // printf("Duration %lld\n", durationMicros);
         if (durationMicros < 0)
         {
-            //\todo Update Time values here
+            myTimer.updateTimer();
         }
     }
 
