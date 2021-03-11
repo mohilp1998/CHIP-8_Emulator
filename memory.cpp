@@ -1,5 +1,11 @@
 #include "include/memory.h"
 
+// Method for disabling DEBUGGING FILE TO FILE Basis
+// #define DISABLE_DEBUG_LOGS
+#ifdef DISABLE_DEBUG_LOGS
+    #define fprintf(myDebugFile, fmt, ...) (0)
+#endif
+
 Memory::Memory(std::FILE *debugFile)
 {
     // Debugging logs
@@ -42,11 +48,11 @@ bool Memory::init(Rom *rom)
     // Getting data from the Rom
     if (!rom->getRomData(mem))
     {
-        std::fprintf(myDebugFile,"[E] <memory.cpp>::Error getting ROM data\n");
+        fprintf(myDebugFile,"[E] <memory.cpp>::Error getting ROM data\n");
         return false;
     }
 
-    std::fprintf(myDebugFile,"[I] <memory.cpp>::Memory initialized with size: %zu bytes\n", mem.size());
+    fprintf(myDebugFile,"[I] <memory.cpp>::Memory initialized with size: %zu bytes\n", mem.size());
     return true;
 }
 

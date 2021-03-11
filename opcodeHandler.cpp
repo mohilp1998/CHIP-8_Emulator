@@ -3,6 +3,12 @@
 #include <cstdlib>
 #include <ctime>
 
+// Method for disabling DEBUGGING FILE TO FILE Basis
+// #define DISABLE_DEBUG_LOGS
+#ifdef DISABLE_DEBUG_LOGS
+    #define fprintf(myDebugFile, fmt, ...) (0)
+#endif
+
 OpcodeHandler::OpcodeHandler(std::FILE *debugFile)
 {
     // Debugging logs
@@ -33,7 +39,7 @@ bool OpcodeHandler::readNxtInstr(Memory *mem)
     pc = pc + 2;
 
     // Printing details to debugFile
-    std::fprintf(myDebugFile,"[I] [PC: %hx]<opcodeHandler.cpp>::Next Instruction is: %hx\n",
+    fprintf(myDebugFile,"[I] [PC: %hx]<opcodeHandler.cpp>::Next Instruction is: %hx\n",
     pc - 2, opcode);
     return true;
 }
@@ -75,13 +81,13 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
                    myGraphics->pixels[i][j] = 0x00;
                 }
             }
-            std::fprintf(myDebugFile, "[I] <opcodeHandler.cpp>::Cleared the Screen\n");
+            fprintf(myDebugFile, "[I] <opcodeHandler.cpp>::Cleared the Screen\n");
             break;
 
         case 0x00EE : // 0x00EE Return from subroutine
             sptr = (sptr - 1) % 16;
             pc = stack[sptr];
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Return from subroutine. PC updated to [%hx] &"
             " stack pointer updated to [%d]\n",
                 pc,
@@ -89,7 +95,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             break;
 
         default:
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
             "[E] [PC: %hx]<opcodeHandler.cpp>::Unknown Opcode: %hx\n",
             pc,
             opcode);
@@ -100,7 +106,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
 
     case 0x1000 : // 0x1NNN: pc = NNN
         pc = (0x0FFF & opcode);
-        std::fprintf(myDebugFile,
+        fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::PC updated to [%hx]\n",
             pc);
         break;
@@ -109,7 +115,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         stack[sptr] = pc;
         sptr = (sptr + 1) % 16;
         pc = (0x0FFF & opcode);
-        std::fprintf(myDebugFile,
+        fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Call subroutine. PC updated to [%hx] &"
             " stack pointer updated to [%d]\n",
                 pc, sptr);
@@ -121,14 +127,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         if (NNData == reg[regX])
         {
             pc = pc + 2;
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], NN Val: [%hhx]\n",
                 pc, regX, reg[regX], NNData);
         }
         else
         {
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Not Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], NN Val: [%hhx]\n",
                 pc, regX ,reg[regX], NNData);
@@ -141,14 +147,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         if (NNData != reg[regX])
         {
             pc = pc + 2;
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], NN Val: [%hhx]\n",
                 pc, regX, reg[regX], NNData);
         }
         else
         {
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Not Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], NN Val: [%hhx]\n",
                 pc, regX, reg[regX], NNData);
@@ -161,14 +167,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         if (reg[regY] == reg[regX])
         {
             pc = pc + 2;
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], regY Val: [%hhx]\n",
                 pc, regX, reg[regX], reg[regY]);
         }
         else
         {
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Not Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], regY Val: [%hhx]\n",
                 pc, regX ,reg[regX], reg[regY]);
@@ -179,7 +185,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         regX = ((opcode & 0x0F00) >> 8);
         reg[regX] = (opcode & 0x00FF);
         // Printing info
-        std::fprintf(myDebugFile,
+        fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Register [%hhx] updated to val [%hhx].\n",
             regX, reg[regX]);
         break;
@@ -187,7 +193,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
     case 0x7000 : // 0x7XNN: Vx += NN
         regX = ((opcode & 0x0F00) >> 8);
         reg[regX] += (opcode & 0x00FF);
-        std::fprintf(myDebugFile,
+        fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Register [%hhx] updated to val [%hhx].\n",
             regX, reg[regX]);
         break;
@@ -261,16 +267,16 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             break;
 
         default:
-            std::fprintf(myDebugFile,"[E] <opcodeHandler.cpp>::Unknown Opcode: %hx\n",
+            fprintf(myDebugFile,"[E] <opcodeHandler.cpp>::Unknown Opcode: %hx\n",
             opcode);
             return false;
             break;
         }
         // Printing info
-        std::fprintf(myDebugFile,
+        fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Register [%hhx] updated to val [%hhx].\n",
             regX, reg[regX]);
-        std::fprintf(myDebugFile,
+        fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::VF val is [%hhx].\n",
             reg[0x0F]);
         break;
@@ -281,14 +287,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         if (reg[regY] != reg[regX])
         {
             pc = pc + 2;
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], regY Val: [%hhx]\n",
                 pc, regX, reg[regX], reg[regY]);
         }
         else
         {
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Not Skipped next Instruction. PC: [%hx],"
             "Register [%hhx] Val: [%hhx], regY Val: [%hhx]\n",
                 pc, regX, reg[regX], reg[regY]);
@@ -297,14 +303,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
 
     case 0xA000 : // 0xANNN: I = NNN
         IReg = (opcode & 0x0FFF);
-        std::fprintf(myDebugFile,
+        fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Register I updated to [%hx]\n",
                 IReg);
         break;
 
     case 0xB000 : // 0xBNNN: PC=V[0]+NNN
         pc = reg[0x00] + (opcode & 0x0FFF);
-        std::fprintf(myDebugFile,
+        fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::PC updated to [%hx]\n",
                 pc);
         break;
@@ -312,7 +318,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
     case 0xC000: //0xCXNN: Vx = rand()&NN
         regX = ((opcode & 0x0F00) >> 8);
         reg[regX] = rand() & (opcode & 0x00FF);
-        std::fprintf(myDebugFile,
+        fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Register [%hhx] updated to [%hhx]\n",
                 regX, reg[regX]);
         break;
@@ -346,7 +352,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             }
             
         }
-        std::fprintf(myDebugFile,
+        fprintf(myDebugFile,
             "[I] <opcodeHandler.cpp>::Drawn Sprite at Pos:(%hd, %hd) and height:%hd. "
             "Also update reg[16] to %hhx\n",
             xPos, yPos, height, reg[0x0F]);
@@ -361,7 +367,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             {
                 pc = pc + 2;
             }
-            std::fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::" 
+            fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::" 
             "PC updated to %hx, key in reg[%hhx] is %hhx\n",
             pc, regX, reg[regX]);
             break;
@@ -371,13 +377,13 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             {
                 pc = pc + 2;
             }
-            std::fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::" 
+            fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::" 
             "PC updated to %hx, key in reg[%hhx] is %hhx\n",
             pc, regX, reg[regX]);
             break;
 
         default:
-            std::fprintf(myDebugFile,"[E] <opcodeHandler.cpp>::Unknown Opcode: %hx\n",
+            fprintf(myDebugFile,"[E] <opcodeHandler.cpp>::Unknown Opcode: %hx\n",
             opcode);
             return false;
             break;
@@ -396,7 +402,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
                 {
                     keyPress = true;
                     reg[regX] = i;
-                    std::fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::Key %hhx pressed,"
+                    fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::Key %hhx pressed,"
                     " moving to next Instruction\n",
                     i);
                     break;
@@ -405,7 +411,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             
             if(!keyPress)
             {
-                std::fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::No key pressed, "
+                fprintf(myDebugFile,"[I] <opcodeHandler.cpp>::No key pressed, "
                 "staying at the same instruction\n");
                 pc = pc - 2;
             }
@@ -413,14 +419,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
 
         case 0x001E: // I += Vx
             IReg += reg[regX];
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
                 "[I] <opcodeHandler.cpp>::Register I updated to [%hx]\n",
                 IReg);
             break;
 
         case 0x0029: //I = sprite_address[Vx]
             IReg = spriteAddr[reg[regX]];
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
                 "[I] <opcodeHandler.cpp>::Register I updated to [%hx]\n",
                 IReg);
             break;
@@ -429,7 +435,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             mem->setMemData(reg[regX]/100, IReg);
             mem->setMemData(((reg[regX] % 100) / 10), IReg+1);
             mem->setMemData((reg[regX] % 10), IReg+2);
-            std::fprintf(myDebugFile,
+            fprintf(myDebugFile,
                 "[I] <opcodeHandler.cpp>::Updated mem address at location IReg: [%hx] to [%hhx], " 
                 "IReg+1: [%hx] to [%hhx], and IReg+2: [%hx] to [%hhx]\n",
                 IReg, reg[regX]/100, IReg+1, ((reg[regX] % 100) / 10), IReg+2, (reg[regX] % 10));
@@ -439,7 +445,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             for (char i = 0; i <= regX; i++)
             {
                 mem->setMemData(reg[i], IReg+i);
-                std::fprintf(myDebugFile,
+                fprintf(myDebugFile,
                     "[I] <opcodeHandler.cpp>::Register [%hhx] with val: [%hhx], stored at memory location: [%hx]\n",
                     i, reg[i], IReg+i);
             }
@@ -449,14 +455,14 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             for (char i = 0; i <= regX; i++)
             {
                 reg[i] = mem->getMemData(IReg+i);
-                std::fprintf(myDebugFile,
+                fprintf(myDebugFile,
                     "[I] <opcodeHandler.cpp>::Register [%hhx] updated to [%hhx] from memory location [%hx]\n",
                     i, reg[i], IReg+i);
             }
             break;
 
         default:
-            std::fprintf(myDebugFile,"[E] <opcodeHandler.cpp>::Unknown Opcode: %hx\n",
+            fprintf(myDebugFile,"[E] <opcodeHandler.cpp>::Unknown Opcode: %hx\n",
             opcode);
             return false;
             break;
@@ -464,7 +470,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         break;
 
     default:
-        std::fprintf(myDebugFile,"[E] <opcodeHandler.cpp>::Unknown Opcode: %hx\n",
+        fprintf(myDebugFile,"[E] <opcodeHandler.cpp>::Unknown Opcode: %hx\n",
         opcode);
         return false;
         break;

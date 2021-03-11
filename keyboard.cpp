@@ -1,5 +1,11 @@
 #include "include/keyboard.h"
 
+// Method for disabling DEBUGGING FILE TO FILE Basis
+// #define DISABLE_DEBUG_LOGS
+#ifdef DISABLE_DEBUG_LOGS
+    #define fprintf(myDebugFile, fmt, ...) (0)
+#endif
+
 keyboard::keyboard(std::FILE *debugFile)
 {
     myDebugFile = debugFile;

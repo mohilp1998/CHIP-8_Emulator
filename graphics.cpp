@@ -1,5 +1,11 @@
 #include "include\graphics.h"
 
+// Method for disabling DEBUGGING FILE TO FILE Basis
+// #define DISABLE_DEBUG_LOGS
+#ifdef DISABLE_DEBUG_LOGS
+    #define fprintf(myDebugFile, fmt, ...) (0)
+#endif
+
 graphics::graphics(std::FILE *debugFile)
 {
     // Debugging logs
@@ -11,7 +17,7 @@ graphics::graphics(std::FILE *debugFile)
     {
             pixels.push_back(pixelRow);
     }
-    std::fprintf(myDebugFile, "[I] <graphics.cpp>::Initialized the pixels array "
+    fprintf(myDebugFile, "[I] <graphics.cpp>::Initialized the pixels array "
         "to size %d x %d\n", pixels[0].size(), pixels.size());
 
 }
@@ -36,7 +42,7 @@ bool graphics::InitSDL()
     // Initialize SDL with only Video feature
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
-        std::fprintf(myDebugFile, "[E] <graphics.cpp>::Unable to initialize the SDL following error: %s\n", SDL_GetError() );
+        fprintf(myDebugFile, "[E] <graphics.cpp>::Unable to initialize the SDL following error: %s\n", SDL_GetError() );
         return false;
     }
     
@@ -44,14 +50,14 @@ bool graphics::InitSDL()
     gWindow = SDL_CreateWindow( "CHIP-8 Emulator", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     if ( NULL == gWindow )
     {
-        std::fprintf(myDebugFile, "[E] <graphics.cpp>::Failed creating Window: %s\n", SDL_GetError() );
+        fprintf(myDebugFile, "[E] <graphics.cpp>::Failed creating Window: %s\n", SDL_GetError() );
         return false;
     }
     // Creating renderer
     gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
     if ( NULL == gRenderer )
     {
-        std::fprintf(myDebugFile, "[E] <graphics.cpp>::Unable to renderer: %s\n", SDL_GetError() );
+        fprintf(myDebugFile, "[E] <graphics.cpp>::Unable to renderer: %s\n", SDL_GetError() );
         return false;
     }
     

@@ -1,5 +1,11 @@
 #include "include/rom.h"
 
+// Method for disabling DEBUGGING FILE TO FILE Basis
+// #define DISABLE_DEBUG_LOGS
+#ifdef DISABLE_DEBUG_LOGS
+    #define fprintf(myDebugFile, fmt, ...) (0)
+#endif
+
 Rom::Rom(std::FILE *debugFile)
 {
     //Constructor
@@ -29,7 +35,7 @@ bool Rom::LoadRom(const char *romPath)
     pFile = std::fopen(romPath, "rb");
     if (pFile == nullptr)
     {
-        std::fprintf(myDebugFile,"[E] <rom.cpp>::Error reading ROM\n");
+        fprintf(myDebugFile,"[E] <rom.cpp>::Error reading ROM\n");
         return false;
     }
 
@@ -37,13 +43,13 @@ bool Rom::LoadRom(const char *romPath)
     std::fseek(pFile, 0, SEEK_END);              // Set ptr to end
     fileSize = std::ftell(pFile);                // Getting the size by end
     std::rewind(pFile);                          // Set the ptr to beginning
-    std::fprintf(myDebugFile,"[I] <rom.cpp>::File Size is %ld\n", fileSize);
+    fprintf(myDebugFile,"[I] <rom.cpp>::File Size is %ld\n", fileSize);
 
     // Allocate buffer of the size
     dataBuffer = (unsigned char*) std::malloc(sizeof(char) * fileSize);
     if (dataBuffer == nullptr)
     {
-        std::fprintf(myDebugFile,"[E] <rom.cpp>::Unable to assign memory\n");
+        fprintf(myDebugFile,"[E] <rom.cpp>::Unable to assign memory\n");
         return false;
     }
 
@@ -51,11 +57,11 @@ bool Rom::LoadRom(const char *romPath)
     size_t result = std::fread(dataBuffer, 1, fileSize, pFile);
     if (result != fileSize)
     {
-        std::fprintf(myDebugFile,"[E] <rom.cpp>::Error in copying File to buffer\n");
+        fprintf(myDebugFile,"[E] <rom.cpp>::Error in copying File to buffer\n");
         return false;
     }
 
-    std::fprintf(myDebugFile,"[I] <rom.cpp>::ROM Loaded Successfully\n");
+    fprintf(myDebugFile,"[I] <rom.cpp>::ROM Loaded Successfully\n");
     // Close the file
     std::fclose(pFile);
 
@@ -67,14 +73,14 @@ bool Rom::getRomData(std::vector<unsigned char>& memory)
     // Check if dataBuffer has data
     if (dataBuffer == nullptr)
     {
-        std::fprintf(myDebugFile,"[E] <rom.cpp>::No data loaded in the Rom\n");
+        fprintf(myDebugFile,"[E] <rom.cpp>::No data loaded in the Rom\n");
         return false;
     }
 
     // Copying data to the memory
     if (fileSize > (memory.size()-512))
     {
-        std::fprintf(myDebugFile,"[E] <rom.cpp>::ROM greater than available memory\n");
+        fprintf(myDebugFile,"[E] <rom.cpp>::ROM greater than available memory\n");
         return false;
     }
 
@@ -83,7 +89,7 @@ bool Rom::getRomData(std::vector<unsigned char>& memory)
         memory[512+i] = dataBuffer[i];
     }
 
-    std::fprintf(myDebugFile,"[I] <rom.cpp>::ROM loaded successfully in memory\n");
+    fprintf(myDebugFile,"[I] <rom.cpp>::ROM loaded successfully in memory\n");
     return true;
     
 }
