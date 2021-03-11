@@ -8,6 +8,7 @@
 
 keyboard::keyboard(std::FILE *debugFile)
 {
+    // Debugging logs
     myDebugFile = debugFile;
 }
 
