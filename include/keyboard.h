@@ -10,12 +10,14 @@ private:
     /*File for debugging*/
     std::FILE *myDebugFile;
 
-public:
     // Keyboard Press array
     std::vector<unsigned char> keyState {std::vector<unsigned char> (16, 0x00)};
 
+public:
     keyboard(std::FILE *debugFile);
     ~keyboard();
 
     bool updateKeyboard(bool &quit);
+    
+    unsigned char getKeyState(unsigned char keynum);
 };

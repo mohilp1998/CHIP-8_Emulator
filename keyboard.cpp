@@ -176,3 +176,8 @@ bool keyboard::updateKeyboard(bool &quit)
 
     return true;
 }
+
+unsigned char keyboard::getKeyState(unsigned char keynum)
+{
+    return keyState[keynum];
+}

@@ -363,7 +363,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         switch (opcode & 0x00FF)
         {
         case 0x009E: // if(key() == Vx) skip nxt Instruction
-            if (myKeyboard->keyState[reg[regX]] == 1)
+            if (myKeyboard->getKeyState(reg[regX]) == 1)
             {
                 pc = pc + 2;
             }
@@ -373,7 +373,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             break;
 
         case 0x00A1: // if(key() != Vx) skip nxt Instruction
-            if (myKeyboard->keyState[reg[regX]] == 0)
+            if (myKeyboard->getKeyState(reg[regX]) == 0)
             {
                 pc = pc + 2;
             }
@@ -398,7 +398,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
             keyPress = false;
             for (char i = 0; i < 0x10; i++)
             {
-                if (myKeyboard->keyState[i] == 1)
+                if (myKeyboard->getKeyState(i) == 1)
                 {
                     keyPress = true;
                     reg[regX] = i;
@@ -513,4 +513,9 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
     FX0A    KeyOp
     */
     return true;
+}
+
+bool OpcodeHandler::getGraphicsFlag()
+{
+    return m_updateGraphics;
 }

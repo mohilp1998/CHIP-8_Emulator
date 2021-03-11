@@ -34,9 +34,10 @@ private:
 
     // sprite addresses
     std::vector<unsigned short> spriteAddr {std::vector<unsigned short> (16, 0x0000)};
-public:
-    // Graphics Update Flag - Public as accessed outside
+
+    // Graphics Update Flag
     bool m_updateGraphics {false};
+public:
 
     // Functions
     OpcodeHandler(std::FILE *debugFile);
@@ -44,6 +45,6 @@ public:
 
     bool readNxtInstr(Memory *mem);
     bool emulateInstr(Memory *mem, graphics *myGraphics, keyboard *myKeyboard); // \todo add graphicsHandler, Timer and Inputs
-    // \todo in graphicsHandler, Timer and Inputs add flags for next iteration update logic.
-    // \todo emulateInstr will update those flags only.
+    
+    bool getGraphicsFlag();
 };
