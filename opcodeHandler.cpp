@@ -396,7 +396,7 @@ bool OpcodeHandler::emulateInstr(Memory *mem, graphics *myGraphics, keyboard *my
         {
         case 0x000A: // Wait till a single press and store it in Vx
             keyPress = false;
-            for (char i = 0; i < 0x0F; i++)
+            for (char i = 0; i < 0x10; i++)
             {
                 if (myKeyboard->keyState[i] == 1)
                 {
