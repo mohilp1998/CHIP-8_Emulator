@@ -45,6 +45,11 @@ As you can see in the GIF in Introduction section, whenever the emulator start i
 
 ![Giving ROM Path](ROMPath.jpg)
 
+### Playing Games
+<p align="center"><b>Chip-8 Keyboard Config</b></p>
+
+![Chip-8 Keyboard Config](keyboardConfig.jpg)
+The left side is the Chip-8 keypad and the right side is the corresponding mapping to the QWERTY Keyboard. Please check the original chip-8 program keypad inputs and map to proper keys on QWERTY keyboard to enjoy the game(/program) you are running.
 ## Acknowledgement
 There are many resources available online which you can use for building your own CHIP-8 emulator. Here are the few which I have used:
 - [Cowgod's Chip-8 Technical Reference](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM)
