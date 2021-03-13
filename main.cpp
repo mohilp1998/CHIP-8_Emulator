@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     if (myDebugFile == nullptr)
     {
         std::printf("[E] <main.cpp>::Error Opening debug file\n");
-        std::printf("ERROR stopping code execution\n");
+        std::printf("ERROR stopping code execution. Check debug.log file.\n");
         std::exit(1);
     }
 
@@ -37,11 +37,16 @@ int main(int argc, char *argv[])
     keyboard myKeyboard(myDebugFile);
     timer myTimer(myDebugFile);
 
-    // Loading the Pong rom
-    if (!myRom.LoadRom("example_code/chip8-roms-master/games/Space Invaders [David Winter].ch8"))
+    // Loading the Rom
+    char romPath[200];
+    std::cout << "Please provide path to the ROM, relative to current folder.\n";
+    std::cout << "For example if in your current ROM is at location current_folder/ROM/name.ch8"
+        << ", then put in the input as ROM/name.ch8\n";
+    std::cin >> romPath;
+    if (!myRom.LoadRom(romPath))
     {
         fprintf(myDebugFile,"[E] <main.cpp>::Error Loading Rom\n");
-        fprintf(stderr, "ERROR stopping code execution\n");
+        fprintf(stderr, "ERROR stopping code execution. Check debug.log file.\n");
         std::exit(1);
     }
 
@@ -49,7 +54,7 @@ int main(int argc, char *argv[])
     if(!myMemory.init(&myRom))
     {
         fprintf(myDebugFile,"[E] <main.cpp>::Error initializing memory\n");
-        fprintf(stderr, "ERROR stopping code execution\n");
+        fprintf(stderr, "ERROR stopping code execution. Check debug.log file.\n");
         std::exit(1);
     }
 
@@ -57,7 +62,7 @@ int main(int argc, char *argv[])
     if (!myGraphics.InitSDL())
     {
         fprintf(myDebugFile,"[E] <main.cpp>::Unable to Initialize SDL\n");
-        fprintf(stderr, "ERROR stopping code execution\n");
+        fprintf(stderr, "ERROR stopping code execution. Check debug.log file.\n");
         std::exit(1);
     }
 
@@ -82,7 +87,7 @@ int main(int argc, char *argv[])
         if (!myOpcodeHandler.readNxtInstr(&myMemory))
         {
             fprintf(myDebugFile,"[E] <main.cpp>::Error reading nxt instruction\n");
-            fprintf(stderr, "ERROR stopping code execution\n");
+            fprintf(stderr, "ERROR stopping code execution. Check debug.log file.\n");
             std::exit(1);
         }
 
@@ -90,7 +95,7 @@ int main(int argc, char *argv[])
         if (!myOpcodeHandler.emulateInstr(&myMemory, &myGraphics, &myKeyboard, &myTimer))
         {
             fprintf(myDebugFile,"[E] <main.cpp>::Error emulating instruction\n");
-            fprintf(stderr, "ERROR stopping code execution\n");
+            fprintf(stderr, "ERROR stopping code execution. Check debug.log file.\n");
             std::exit(1);
         }
 
@@ -100,7 +105,7 @@ int main(int argc, char *argv[])
             if(!myGraphics.draw())
             {
                 fprintf(myDebugFile,"[E] <main.cpp>::Error Drawing Graphics\n");
-                fprintf(stderr, "ERROR stopping code execution\n");
+                fprintf(stderr, "ERROR stopping code execution. Check debug.log file.\n");
                 std::exit(1);
             }
             else
@@ -113,7 +118,7 @@ int main(int argc, char *argv[])
         if (!myKeyboard.updateKeyboard(quit))
         {
             fprintf(myDebugFile,"[E] <main.cpp>::Error Updating Keyboard State\n");
-            fprintf(stderr, "ERROR stopping code execution\n");
+            fprintf(stderr, "ERROR stopping code execution. Check debug.log file.\n");
             std::exit(1);
         }
 
