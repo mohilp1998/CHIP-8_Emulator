@@ -3,8 +3,8 @@
 ## Introduction
 CHIP-8 is a 8-bit microprocessor released in mid-1970. This repo includes c++ code to emulate CHIP-8. It can be used to run chip-8 programs like pong, space invaders, etc. Following gif shows the chip-8 emulator in action.
 
+<p align="center"><b>Code In Action</b></p>
 ![Code in Work](chip8.gif)
-**Code In Action**
 
 Wikipedia link: https://en.wikipedia.org/wiki/CHIP-8 
 
@@ -27,18 +27,19 @@ In this project the debugging messages are collected in *debug.log* file which w
 
 To ease up the work of disabling logging, in the project all you need to uncomment a line in each .cpp (i.e. you will need to uncomment a total of 7 lines - one for each .cpp file - main.cpp, graphics.cpp, keyboard.cpp, memory.cpp, opcodeHandler.cpp, rom.cpp & timer.cpp). See the images below for example:
 
+<p align="center"><b>Debugging Enabled</b></p>
 ![Debugging Enabled](Debugging_Enabled.jpg)
-**Debugging Enabled**
 
+<p align="center"><b>Debugging Disabled</b></p>
 ![Debugging Disabled](Debugging_Disabled.jpg)
-**Debugging Disabled**
 
 Note that you can enable or disable debugging at each .cpp file level also. You can disable logging for graphics.cpp and keyboard.cpp while getting messages for rest of the files. This is done to have finer control over debugging messages for easy troubleshooting any issues.
 
 ### Load different ROMs
 As you can see in the GIF in Introduction section, whenever the emulator start it will ask you to give you the relative address (from current working directory) to the ROM. I would recommend you create a folder named *ROM* under you current directory and put all the ROMs you may want to load there.
+
+<p align="center"><b>Giving ROM Path</b></p>
 ![Giving ROM Path](ROMPath.jpg)
-**Giving ROM Path**
 
 ## Acknowledgement
 There are many resources available online which you can use for building your own CHIP-8 emulator. Here are the few which I have used:
