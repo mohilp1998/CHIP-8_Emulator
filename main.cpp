@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
     std::cout << "Please provide path to the ROM, relative to current folder.\n";
     std::cout << "For example if in your current ROM is at location current_folder/ROM/name.ch8"
         << ", then put in the input as ROM/name.ch8\n";
+    std::cout << "Relative Path: ";
     std::cin >> romPath;
     if (!myRom.LoadRom(romPath))
     {
